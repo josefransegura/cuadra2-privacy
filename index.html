@@ -392,14 +392,15 @@
     }
 
     .cta-box::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top left,
-          rgba(255, 255, 255, 0.35),
-          transparent 40%);
-    }
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left,
+      rgba(255, 255, 255, 0.35),
+      transparent 40%);
+  pointer-events: none;
+}
 
     .cta-box h2 {
       position: relative;
