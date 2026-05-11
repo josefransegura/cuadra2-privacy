@@ -1,36 +1,804 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Cuadra2 — Coordina turnos y vida familiar sin conflictos</title>
+
+  <meta name="description"
+    content="El calendario inteligente para parejas y profesionales con turnos rotativos. Coordina cuadrantes, detecta conflictos y organiza tu vida familiar desde una sola app." />
+
   <meta name="google-site-verification" content="07uyGmbTe3W-o4BWOr0oM0Cr9OzXKZtUC2CslTApRZw" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cuadra2</title>
-<meta name="google-site-verification" content="TU_CODIGO_AQUI" />
+
+  <meta property="og:title" content="Cuadra2 — Calendario inteligente de turnos" />
+  <meta property="og:description"
+    content="Coordina cuadrantes, detecta conflictos y organiza tu vida familiar desde una sola app." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --green: #1bb56d;
+      --green-dark: #11955a;
+      --green-soft: #eaf8f1;
+      --text: #111827;
+      --text-soft: #5f6672;
+      --border: #e5e7eb;
+      --bg: #f8faf8;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 250, 248, 0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2cc67d, #0f9f5d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    nav {
+      display: flex;
+      gap: 34px;
+      color: var(--text-soft);
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      color: var(--green-dark);
+    }
+
+    .download-btn {
+      background: #081f14;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 80px 0 120px;
+      background:
+        radial-gradient(circle at top left, #dff7ea 0%, transparent 40%),
+        linear-gradient(180deg, #f3fcf6 0%, #f8faf8 100%);
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .app-icon-large {
+      width: 120px;
+      height: 120px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, #2cc67d, #0f9f5d);
+      margin: 0 auto 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 50px rgba(27, 181, 109, 0.25);
+      overflow: hidden;
+    }
+
+    .app-icon-large img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-weight: 700;
+      margin-bottom: 28px;
+      font-size: 14px;
+    }
+
+    .hero h1 {
+      font-size: 72px;
+      line-height: 0.95;
+      margin-bottom: 26px;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .hero h1 span {
+      color: var(--green);
+    }
+
+    .hero p {
+      font-size: 24px;
+      color: var(--text-soft);
+      max-width: 760px;
+      margin: auto;
+    }
+
+    .hero-buttons {
+      margin-top: 46px;
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .google-play {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: #0d1f17;
+      color: white;
+      padding: 18px 28px;
+      border-radius: 22px;
+      font-weight: bold;
+      box-shadow: var(--shadow);
+    }
+
+    .google-play:hover {
+      transform: translateY(-2px);
+    }
+
+    .secondary-link {
+      display: inline-flex;
+      align-items: center;
+      font-weight: bold;
+      color: var(--text-soft);
+    }
+
+    /* FEATURES */
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      max-width: 720px;
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      color: var(--green-dark);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      font-size: 58px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 34px;
+      transition: .2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: var(--green-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 22px;
+    }
+
+    .feature-card h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: var(--text-soft);
+      font-size: 17px;
+    }
+
+    /* SCREENSHOTS */
+
+    .screenshots {
+      background: #eef8f1;
+    }
+
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .phone {
+      background: #071c13;
+      border-radius: 42px;
+      padding: 10px;
+      aspect-ratio: 9 / 19;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .phone img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 34px;
+    }
+
+    .phone.center {
+      transform: translateY(-24px);
+    }
+
+    /* AUDIENCE */
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 22px;
+      margin-top: 60px;
+    }
+
+    .audience-card {
+      background: white;
+      border-radius: 28px;
+      padding: 34px 24px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .audience-icon {
+      width: 62px;
+      height: 62px;
+      margin: auto;
+      border-radius: 20px;
+      background: var(--green-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .audience-card h3 {
+      font-size: 24px;
+    }
+
+    /* CTA */
+
+    .cta {
+      padding-bottom: 120px;
+    }
+
+    .cta-box {
+      background: linear-gradient(135deg, #2cc67d, #0f9f5d);
+      border-radius: 42px;
+      padding: 90px 40px;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left,
+          rgba(255, 255, 255, 0.35),
+          transparent 40%);
+    }
+
+    .cta-box h2 {
+      position: relative;
+      font-size: 58px;
+      line-height: 1;
+      margin-bottom: 22px;
+    }
+
+    .cta-box p {
+      position: relative;
+      font-size: 22px;
+      margin-bottom: 36px;
+      opacity: 0.95;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 50px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      color: var(--text-soft);
+    }
+
+    .footer-links a:hover {
+      color: var(--green-dark);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1100px) {
+
+      .features-grid,
+      .screenshots-grid,
+      .audience-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .phone.center {
+        transform: none;
+      }
+
+      .hero h1 {
+        font-size: 58px;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 60px 0 90px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .hero p {
+        font-size: 19px;
+      }
+
+      .section-title h2,
+      .cta-box h2 {
+        font-size: 40px;
+      }
+
+      .features-grid,
+      .screenshots-grid,
+      .audience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+  </style>
 </head>
 
-<body style="font-family: Arial; max-width: 800px; margin: 40px auto;">
+<body>
 
-<h1>Cuadra2</h1>
+  <!-- HEADER -->
 
-<p>Aplicación para gestión de turnos, eventos y calendario personal.</p>
+  <header>
+    <div class="container header-inner">
 
-<h2>¿Qué hace la app?</h2>
-<p>
-Cuadra2 permite organizar turnos de trabajo y eventos personales en un calendario unificado.
-También permite importar eventos desde Google Calendar para visualizarlos junto a los turnos.
-</p>
+      <div class="logo">
+        <div class="logo-icon">📅</div>
+        <span>Cuadra2</span>
+      </div>
 
-<h2>Información legal</h2>
-<ul>
-<li><a href="https://josefransegura.github.io/cuadra2-privacy/privacy.html">
-Política de privacidad</a></li>
+      <nav>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#capturas">Capturas</a>
+        <a href="#para-quien">Para quién</a>
+      </nav>
 
-<li><a href="https://josefransegura.github.io/cuadra2-privacy/terms.html">
-Términos de uso</a></li>
-</ul>
+      <a class="download-btn"
+        href="https://play.google.com/store/apps/details?id=com.cuadra2.app"
+        target="_blank">
+        Descargar
+      </a>
 
-<h2>Contacto</h2>
-<p>Email: Cuadra2desarrollo@outlook.com</p>
+    </div>
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="container hero-content">
+
+      <!-- ICONO APP -->
+      <!-- Sustituye icono-app.png por tu icono real -->
+
+      <div class="app-icon-large">
+        <img src="images/icono-app.png" alt="Icono Cuadra2">
+      </div>
+
+      <div class="hero-tag">
+        Disponible en Google Play
+      </div>
+
+      <h1>
+        Coordina turnos y vida familiar
+        <span>sin conflictos</span>
+      </h1>
+
+      <p>
+        El calendario inteligente para parejas y profesionales
+        con turnos rotativos.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a class="google-play"
+          href="https://play.google.com/store/apps/details?id=com.cuadra2.app"
+          target="_blank">
+
+          <span>📲</span>
+          <span>Disponible en Google Play</span>
+
+        </a>
+
+        <a class="secondary-link" href="#beneficios">
+          Descubre cómo funciona →
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES -->
+
+  <section id="beneficios" class="section">
+
+    <div class="container">
+
+      <div class="section-title">
+
+        <div class="section-label">
+          Funcionalidades
+        </div>
+
+        <h2>
+          Todo lo que necesitas
+          para tener el control.
+        </h2>
+
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">📅</div>
+          <h3>Cuadrantes automáticos</h3>
+          <p>
+            Genera tus turnos rotativos automáticamente
+            mediante patrones reutilizables.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚠️</div>
+          <h3>Detección de conflictos</h3>
+          <p>
+            Detecta automáticamente incompatibilidades
+            entre turnos y eventos familiares.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👨‍👩‍👧</div>
+          <h3>Coordinación en pareja</h3>
+          <p>
+            Sincroniza calendarios y organiza la vida
+            familiar desde una sola app.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3>Notificaciones inteligentes</h3>
+          <p>
+            Recordatorios y alertas relevantes según
+            vuestro calendario real.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🏖️</div>
+          <h3>Vacaciones y eventos</h3>
+          <p>
+            Gestiona vacaciones, asuntos propios
+            y citas importantes fácilmente.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🗓️</div>
+          <h3>Vista mensual y anual</h3>
+          <p>
+            Visualiza turnos, descansos y eventos
+            de forma rápida y clara.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SCREENSHOTS -->
+
+  <section id="capturas" class="section screenshots">
+
+    <div class="container">
+
+      <div class="section-title">
+
+        <div class="section-label">
+          La app
+        </div>
+
+        <h2>
+          Diseñada para usarse cada día.
+        </h2>
+
+      </div>
+
+      <div class="screenshots-grid">
+
+        <div class="phone">
+          <img src="images/captura1.webp" alt="Captura Cuadra2 1">
+        </div>
+
+        <div class="phone">
+          <img src="images/captura2.webp" alt="Captura Cuadra2 2">
+        </div>
+
+        <div class="phone center">
+          <img src="images/captura3.webp" alt="Captura Cuadra2 3">
+        </div>
+
+        <div class="phone">
+          <img src="images/captura4.webp" alt="Captura Cuadra2 4">
+        </div>
+
+        <div class="phone">
+          <img src="images/captura5.webp" alt="Captura Cuadra2 5">
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- AUDIENCE -->
+
+  <section id="para-quien" class="section">
+
+    <div class="container">
+
+      <div class="section-title">
+
+        <div class="section-label">
+          Para quién es
+        </div>
+
+        <h2>
+          Hecho para quienes
+          no tienen un horario normal.
+        </h2>
+
+      </div>
+
+      <div class="audience-grid">
+
+        <div class="audience-card">
+          <div class="audience-icon">👮</div>
+          <h3>Policías</h3>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-icon">🏥</div>
+          <h3>Sanitarios</h3>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-icon">🚒</div>
+          <h3>Bomberos</h3>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-icon">🏠</div>
+          <h3>Familias</h3>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-icon">⏰</div>
+          <h3>Trabajos a turnos</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+
+  <section class="cta">
+
+    <div class="container">
+
+      <div class="cta-box">
+
+        <h2>
+          Empieza a coordinar
+          tu vida hoy.
+        </h2>
+
+        <p>
+          Descarga Cuadra2 gratis y recupera el control
+          de tu calendario.
+        </p>
+
+        <a class="google-play"
+          href="https://play.google.com/store/apps/details?id=com.cuadra2.app"
+          target="_blank">
+
+          <span>📲</span>
+          <span>Disponible en Google Play</span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div class="logo">
+        <div class="logo-icon">📅</div>
+        <span>Cuadra2</span>
+      </div>
+
+      <div class="footer-links">
+
+        <a href="https://josefransegura.github.io/cuadra2-privacy/privacy.html"
+          target="_blank">
+          Política de privacidad
+        </a>
+
+        <a href="https://josefransegura.github.io/cuadra2-privacy/terms.html"
+          target="_blank">
+          Términos de uso
+        </a>
+
+        <a href="mailto:Cuadra2desarrollo@outlook.com">
+          Contacto
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
 
 </body>
+
 </html>
