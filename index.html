@@ -375,6 +375,31 @@
       font-size: 24px;
     }
 
+/* VIDEO */
+
+.video-section {
+  padding: 100px 0;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+    
     /* CTA */
 
     .cta {
@@ -826,6 +851,39 @@
 
   </section>
 
+<!-- VIDEO -->
+
+<section class="video-section">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-label">
+        Vídeo
+      </div>
+
+      <h2>
+        Mira Cuadra2 en acción.
+      </h2>
+
+    </div>
+
+    <div class="video-wrapper">
+
+      <iframe
+        src="https://www.youtube.com/embed/pdVpkMmY5VA"
+        title="Vídeo Cuadra2"
+        allowfullscreen>
+      </iframe>
+
+    </div>
+
+  </div>
+
+</section>
+
+  
   <!-- CTA -->
 
   <section class="cta">
